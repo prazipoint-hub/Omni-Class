@@ -27,6 +27,9 @@ import ParentStudent from "../modules/parent-student/models/ParentStudent.js";
 import StudentAttendance from "../modules/parent-student/models/StudentAttendance.js";
 import StudentResult from "../modules/parent-student/models/StudentResult.js";
 
+// Headmaster models
+import Approval from "../modules/headmaster/models/Approval.js";
+
 // --------------------------------------------------
 // TEACHING ASSIGNMENTS
 // --------------------------------------------------
@@ -114,6 +117,12 @@ StudentAttendance.belongsTo(Student, { foreignKey: "studentId" });
 Student.hasMany(StudentResult, { foreignKey: "studentId" });
 StudentResult.belongsTo(Student, { foreignKey: "studentId" });
 
+// --------------------------------------------------
+// APPROVALS
+// --------------------------------------------------
+Approval.belongsTo(User, { foreignKey: "requestedBy", as: "requester" });
+Approval.belongsTo(User, { foreignKey: "reviewedBy", as: "reviewer" });
+
 export {
   sequelize,
 
@@ -141,5 +150,7 @@ export {
   Parent,
   ParentStudent,
   StudentAttendance,
-  StudentResult
+  StudentResult,
+
+  Approval
 };

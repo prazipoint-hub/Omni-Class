@@ -1,15 +1,18 @@
 import { Router } from "express";
 import { asyncHandler } from "../../../utils/http.js";
-import parentController from null;
 import * as parentCtrl from "../controllers/parent.controller.js";
-import authenticate from null;
-
+import { authenticate } from "../../../middleware/auth.js";
 import requireParent from "../middleware/requireParent.js";
 
 const router = Router();
 
-// Note: authentication middleware lives at src/middleware/auth.js and is applied globally in routes where needed.
+// Protect parent endpoints
+router.use(authenticate);
+router.use(requireParent);
 
+// Dashboard
 router.get("/dashboard", asyncHandler(parentCtrl.dashboard));
+
+// Additional parent endpoints may be added here
 
 export default router;

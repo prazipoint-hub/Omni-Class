@@ -23,6 +23,17 @@ async function seed() {
       console.log("Admin already exists");
     }
 
+    // Create demo headmaster
+    const headEmail = process.env.SEED_HEADMASTER_EMAIL || "headmaster@example.com";
+    const existingHead = await User.findOne({ where: { email: headEmail } });
+    if (!existingHead) {
+      const hash = await bcrypt.hash(process.env.SEED_HEADMASTER_PASSWORD || "password", 10);
+      const head = await User.create({ email: headEmail, passwordHash: hash, role: "headmaster", schoolId: schoolId || null });
+      console.log("Created demo headmaster:", head.email);
+    } else {
+      console.log("Headmaster already exists");
+    }
+
     // Optionally create sample student and parent for testing
     const student = await Student.create({ schoolId: schoolId || null, admissionNumber: `S-${Date.now()}`, firstName: "Demo", lastName: "Student" });
     const parentUser = await User.create({ email: `parent+${Date.now()}@example.com`, passwordHash: await bcrypt.hash("password", 10), role: "parent", schoolId: schoolId || null });
