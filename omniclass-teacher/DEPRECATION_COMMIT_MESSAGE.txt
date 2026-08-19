@@ -1,0 +1,1 @@
+Deprecate ecclesia-teacher: replaced with pointer to omniclass-teacher
