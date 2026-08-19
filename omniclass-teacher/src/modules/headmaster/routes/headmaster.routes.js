@@ -12,4 +12,10 @@ router.use(requireHeadmaster);
 router.get("/dashboard", asyncHandler(headmasterCtrl.dashboard));
 router.get("/attendance/summary", asyncHandler(headmasterCtrl.attendanceSummary));
 
+// Approvals
+router.get("/approvals", asyncHandler(headmasterCtrl.listApprovals));
+router.get("/approvals/:id", asyncHandler(headmasterCtrl.getApproval));
+router.post("/approvals/:id/approve", asyncHandler(headmasterCtrl.approveApproval));
+router.post("/approvals/:id/reject", asyncHandler(headmasterCtrl.rejectApproval));
+
 export default router;
